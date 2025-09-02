@@ -1,527 +1,158 @@
-/* =================================
-   RESET Y CONFIGURACIÓN GLOBAL
-==================================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@font-face {
+  font-family: "Vend Sans";
+  src: url("../fonts/Vend_Sans/VendSans-VariableFont_wght.ttf")
+    format("truetype");
 }
 
-body {
-  font-family: "Arial", sans-serif;
-  background: linear-gradient(135deg, #f4f4f4 0%, #e8e8e8 100%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  overflow-x: hidden;
-  margin: 0;
-  position: relative;
-}
-
-/* =================================
-   CONTENEDOR DE LA TARJETA
-================================= */
-.card-container {
-  perspective: 1000px;
-  width: 400px;
-  height: 500px;
-}
-
-.card {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease-in-out;
-  cursor: pointer;
-  transform-origin: center center;
-}
-
-.card:hover {
-  transform: rotateY(180deg);
-}
-
-.card.flipped {
-  transform: rotateY(180deg);
-}
-
-/* =================================
-   CARAS DE LA TARJETA
-================================= */
-.card-face {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: box-shadow 0.3s ease;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
-
-.card-face:hover {
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-}
-
-/* =================================
-   FRENTE DE LA TARJETA
-================================= */
-.card-front {
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 30px;
-  position: relative;
-}
-
-.card-front::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
-
-/* =================================
-   REVERSO DE LA TARJETA - MEJORADO
-================================= */
-.card-back {
-  background: linear-gradient(135deg, #2e2e2e 0%, #1c1c1c 100%);
-  color: #ffffff;
-  transform: rotateY(180deg);
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  -webkit-transform: rotateY(180deg);
-  border: 3px solid #ff6b35;
-  border-radius: 20px;
-}
-
-/* Añadir un overlay decorativo */
-.card-back::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  pointer-events: none;
-  border-radius: 20px;
-}
-
-/* =================================
-   IMAGEN DE PERFIL
-================================= */
-.profile-img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.9);
-  margin-bottom: 20px;
-  overflow: hidden;
-  position: relative;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.profile-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.profile-img:hover img {
-  transform: scale(1.1);
-}
-
-.profile-placeholder {
-  display: none;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* =================================
-   INFORMACIÓN PERSONAL
-================================= */
-.name {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  animation: fadeInUp 1s ease-out;
-}
-
-.title {
-  font-size: 16px;
-  opacity: 0.9;
-  margin-bottom: 20px;
-  animation: fadeInUp 1s ease-out 0.2s both;
-}
-
-.quote {
-  font-style: italic;
-  font-size: 14px;
-  opacity: 0.8;
-  text-align: center;
-  line-height: 1.4;
-  animation: fadeInUp 1s ease-out 0.4s both;
-}
-
-/* =================================
-   INFORMACIÓN DE CONTACTO - OUTLINED
-================================= */
-.contact-info {
-  flex-grow: 1;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  padding: 12px;
-  background: transparent; /* 👈 ya no fondo sólido */
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: #efefef; /* 👈 texto naranja */
-  border: 2px solid #ff6b35; /* 👈 borde naranja visible */
-  box-shadow: none; /* 👈 fuera sombras pesadas */
-}
-
-.contact-item:hover {
-  background: rgba(255, 107, 53, 0.1); /* 👈 ligero relleno en hover */
-  transform: translateX(5px);
-  border-color: #f7931e; /* 👈 borde más brillante */
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25); /* 👈 sombra suave */
-  color: #f7931e;
-}
-
-.contact-item:active {
-  transform: translateX(3px) scale(0.98);
-}
-
-.contact-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-}
-
-.contact-icon svg {
-  flex-shrink: 0;
-}
-
-.contact-item:hover .contact-icon {
-  border-color: #f7931e;
-  color: #f7931e;
-}
-
-.contact-text {
-  font-size: 14px;
-  word-break: break-all;
-  font-weight: 600;
-  text-shadow: none; /* 👈 más limpio */
-  transition: color 0.3s ease;
-}
-
-.contact-item:hover .contact-text {
-  color: #f7931e;
-}
-
-/* =================================
-   HABILIDADES - MEJORADAS
-================================= */
-.skills {
-  margin-top: 20px;
-}
-
-.skills-title {
-  font-size: 18px;
-  margin-bottom: 15px;
-  text-align: center;
-  color: #ffffff;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
-
-.skill-tag {
-  background: linear-gradient(135deg, #ff6b35, #f7931e);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 25px;
-  font-size: 12px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  transition: all 0.3s ease;
-  cursor: default;
-  font-weight: 600;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.skill-tag:hover {
-  background: linear-gradient(135deg, #f7931e, #ff6b35);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-}
-
-/* =================================
-   INDICADOR DE VOLTEO
-================================= */
-.flip-hint {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  opacity: 0.9;
-  animation: pulse 2s infinite;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 8px 16px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  color: white;
-  font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* =================================
-   ANIMACIONES
-================================= */
-@keyframes pulse {
-  0% {
-    opacity: 0.7;
-    transform: translateX(-50%) scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.05);
-  }
-  100% {
-    opacity: 0.7;
-    transform: translateX(-50%) scale(1);
-  }
-}
-
+/* Animaciones */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-@keyframes float {
+@keyframes bubble {
   0% {
-    transform: translateY(100vh) rotate(0deg);
-    opacity: 0;
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
   }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
+  50% {
+    transform: translateY(-50vh) scale(1.1);
+    opacity: 0.4;
   }
   100% {
-    transform: translateY(-100px) rotate(360deg);
+    transform: translateY(-100vh) scale(0.9);
     opacity: 0;
   }
 }
 
-/* =================================
-   PARTÍCULAS DE FONDO
-================================= */
-.particle {
+/* Layout */
+body {
+  background: #f4f4f4;
+  font-family: "Montserrat", Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Fondo burbujas */
+.bubbles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+.bubbles span {
   position: absolute;
-  width: 3px;
-  height: 3px;
-  background: rgba(255, 95, 37, 0.386);
+  bottom: -50px;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 87, 34, 0.6);
   border-radius: 50%;
-  pointer-events: none;
-  animation: float linear infinite;
+  animation: bubble 12s linear infinite;
+}
+.bubbles span:nth-child(1) {
+  left: 10%;
+  animation-duration: 9s;
+}
+.bubbles span:nth-child(2) {
+  left: 30%;
+  animation-duration: 11s;
+}
+.bubbles span:nth-child(3) {
+  left: 50%;
+  animation-duration: 13s;
+}
+.bubbles span:nth-child(4) {
+  left: 70%;
+  animation-duration: 10s;
+}
+.bubbles span:nth-child(5) {
+  left: 90%;
+  animation-duration: 12s;
 }
 
-/* =================================
-   RESPONSIVE DESIGN
-================================= */
-@media (max-width: 400px) {
-  .card-container {
-    width: 300px;
-    height: 450px;
-  }
-
-  .name {
-    font-size: 24px;
-  }
-
-  .profile-img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .profile-placeholder {
-    font-size: 40px;
-  }
-
-  .card-front,
-  .card-back {
-    padding: 30px 20px;
-  }
-
-  .contact-text {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 320px) {
-  .card-container {
-    width: 280px;
-    height: 420px;
-  }
-
-  .skill-tag {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
-}
-
-/* =================================
-   ACCESIBILIDAD
-================================= */
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-
-  .profile-img img {
-    transition: none;
-  }
-
-  .flip-hint {
-    animation: none;
-  }
-
-  .particle {
-    animation: none;
-  }
-}
-
-/* =================================
-   BOTÓN WHATSAPP
-================================= */
-.whatsapp-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.whatsapp-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 14px 28px;
-  background: linear-gradient(135deg, #25d366, #128c7e);
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  text-decoration: none;
-  border-radius: 50px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-  border: none;
-}
-
-.whatsapp-btn:hover {
-  background: linear-gradient(135deg, #128c7e, #25d366);
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}
-
-.whatsapp-btn:active {
-  transform: translateY(1px) scale(0.98);
-}
-
-/* Botones sociales */
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 20px;
-}
-
-.social-btn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.social-btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* Colores oficiales */
-.social-btn.fb {
-  background: #1877f2;
-}
-.social-btn.ig {
-  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
-}
-.social-btn.wa {
-  background: #25d366;
-}
-
-.social-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* Usuario debajo */
-.username {
+/* Header */
+.menu-header {
   text-align: center;
-  margin-top: 8px;
-  font-size: 14px;
-  color: #fff;
-  font-weight: 600;
+  padding: 40px 20px 20px;
+}
+.menu-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff5722;
+  margin-bottom: 8px;
+  animation: fadeInUp 0.8s ease forwards;
+}
+.menu-header p {
+  font-size: 1rem;
+  color: #555;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.3s;
+}
+
+/* Lista */
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 40px auto;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-list li a {
+  display: block;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+.menu-list li:nth-child(1) a {
+  animation-delay: 0.3s;
+}
+.menu-list li:nth-child(2) a {
+  animation-delay: 0.5s;
+}
+.menu-list li:nth-child(3) a {
+  animation-delay: 0.7s;
+}
+
+.menu-list li a:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.menu-list h2 {
+  font-size: 1.2rem;
+  color: #ff5722;
+  margin-bottom: 6px;
+}
+.menu-list p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Footer */
+.menu-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #444;
 }
